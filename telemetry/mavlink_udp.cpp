@@ -82,7 +82,7 @@ void Mavlinkudp::receive_loop() {
                             printf("Mavlink msg: ID=%d sysid=%d compid=%d len=%d\n",
                                     msg.msgid, msg.sysid, msg.compid, msg.len);
                         }
-                    } else if (msg.sysid == OHD_SYS_ID_BETAFLIGHT) {
+                    } else if (msg.sysid == OHD_SYS_ID_BETAFLIGHT || msg.sysid == OHD_SYS_ID_INAV) {
                         if(!fc_telem->handle_message(msg)) {
                             printf("Mavlink msg: ID=%d sysid=%d compid=%d len=%d\n",
                                     msg.msgid, msg.sysid, msg.compid, msg.len);

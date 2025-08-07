@@ -20,26 +20,44 @@ BatteryWidget::BatteryWidget(lv_obj_t* parent, bool is_air, TelemetryState* stat
 }
 
 void BatteryWidget::update() {
-    if (!label || !telemetry_state) return;
+    if (!telemetry_state) return;
 
-    auto stats = is_air_unit ? telemetry_state->get_air_stats()
-                              : telemetry_state->get_ground_stats();
+    auto stats = telemetry_state->get_fc_stats();
 
     std::string formatted = prefix.empty() ? "" : prefix;
-    formatted += std::to_string(stats.soc_temp_c);
+    formatted += std::to_string(stats.battery_remaining_pct);
     if (show_unit) {
-        formatted += "C";
+        formatted += "%";
     }
 
-    lv_label_set_text(label, formatted.c_str());
+    lv_label_set_text(label_percentage, formatted.c_str());
+
+    formatted = prefix.empty() ? "" : prefix;
+    formatted += std::to_string(stats.battery_current);
+    if (show_unit) {
+        formatted += "A";
+    }
+
+    lv_label_set_text(label_current, formatted.c_str());
+
+    formatted = prefix.empty() ? "" : prefix;
+    formatted += std::to_string(stats.battery_voltage);
+    if (show_unit) {
+        formatted += "V";
+    }
+
+    lv_label_set_text(label_voltage, formatted.c_str());
+
 }
 
 void BatteryWidget::set_color(lv_color_t color) {
-    /*if (!style_initialized) {
+    if (!style_initialized) {
         lv_style_init(&style);
         style_initialized = true;
     }
 
     lv_style_set_text_color(&style, color);
-    lv_obj_add_style(label, &style, 0);*/
+    lv_obj_add_style(label_voltage, &style, 0);
+    lv_obj_add_style(label_percentage, &style, 0);
+    lv_obj_add_style(label_current, &style, 0);
 }

@@ -9,6 +9,7 @@
 #include <atomic>
 
 #define OHD_SYS_ID_BETAFLIGHT 0
+#define OHD_SYS_ID_INAV       1
 #define OHD_SYS_ID_GROUND 100
 #define OHD_SYS_ID_AIR 101
 
