@@ -20,6 +20,8 @@ public:
 
 protected:
     void init_container(lv_obj_t* parent);
+    void update_position();
+    int abs_x, abs_y;
     lv_obj_t* container = nullptr;
     lv_obj_t* label = nullptr;
     lv_obj_t* icon = nullptr;

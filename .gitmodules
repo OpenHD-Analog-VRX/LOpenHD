@@ -1,6 +1,6 @@
 [submodule "external/lvgl"]
 	path = external/lvgl
-	url = https://github.com/lvgl/lvgl.git
+	url = https://github.com/OpenHD-Analog-VRX/lvgl.git
 [submodule "external/mavlink-headers"]
 	path = external/mavlink-headers
 	url = https://github.com/OpenHD/mavlink-headers

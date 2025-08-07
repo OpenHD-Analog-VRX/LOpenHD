@@ -37,6 +37,11 @@ TelemetryState::SystemStats TelemetryState::get_air_stats() {
     return air_stats;
 }
 
+TelemetryState::FCStats TelemetryState::get_fc_stats() {
+    std::lock_guard<std::mutex> lock(mtx);
+    return fc_stats;
+}
+
 uint8_t TelemetryState::get_fc_sys_id() {
     std::lock_guard<std::mutex> lock(mtx);
     return fc_sys_id;
@@ -50,4 +55,34 @@ uint8_t TelemetryState::get_air_sys_id() {
 uint8_t TelemetryState::get_ground_sys_id() {
     std::lock_guard<std::mutex> lock(mtx);
     return ground_sys_id;
+}
+
+void TelemetryState::set_fc_roll(float roll) {
+    std::lock_guard<std::mutex> lock(mtx);
+    fc_stats.set_roll(roll);
+}
+
+void TelemetryState::set_fc_pitch(float pitch) {
+    std::lock_guard<std::mutex> lock(mtx);
+    fc_stats.set_pitch(pitch);
+}
+
+void TelemetryState::set_fc_yaw(float yaw) {
+    std::lock_guard<std::mutex> lock(mtx);
+    fc_stats.set_yaw(yaw);
+}
+
+void TelemetryState::set_fc_voltage(float voltage) {
+    std::lock_guard<std::mutex> lock(mtx);
+    fc_stats.set_voltage(voltage);
+}
+
+void TelemetryState::set_fc_current(float current) {
+    std::lock_guard<std::mutex> lock(mtx);
+    fc_stats.set_current(current);
+}
+
+void TelemetryState::set_fc_battery_remaining(int pct) {
+    std::lock_guard<std::mutex> lock(mtx);
+    fc_stats.set_battery_remaining(pct);
 }

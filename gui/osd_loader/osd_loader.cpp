@@ -4,6 +4,8 @@
 
 #include "gui/osd/soc_temp_widget.h"
 #include "gui/osd/text_widget.h"
+#include "gui/osd/attitude_widget.h"
+#include "gui/osd/battery_widget.h"
 
 OSDLoader::OSDLoader(OSDManager& manager, TelemetryState* state, lv_obj_t* parent)
     : osd_manager(manager), telemetry_state(state), parent(parent) {}
@@ -58,6 +60,24 @@ std::shared_ptr<OSDWidget> OSDLoader::create_widget(const nlohmann::json& j) {
 
         if (j.contains("color")) widget->set_color(hex_to_color(j["color"]));
 
+        return widget;
+    } else if (type == "attitude") {
+        int size = j.value("size", 120);
+        auto widget = std::make_shared<AttitudeWidget>(parent, telemetry_state, size);
+
+        if (j.contains("color"))
+            widget->set_color(hex_to_color(j["color"]));
+
+        return widget;
+    } else if (type == "battery") {
+        auto widget = std::make_shared<BatteryWidget>(
+            parent,
+            j.value("is_air", false),
+            telemetry_state
+        );
+
+        if (j.contains("icon")) widget->set_icon_src(j["icon"]);
+        if (j.contains("color")) widget->set_color(hex_to_color(j["color"]));
         return widget;
     }
 

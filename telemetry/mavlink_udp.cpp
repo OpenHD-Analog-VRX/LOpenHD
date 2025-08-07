@@ -40,6 +40,7 @@ void Mavlinkudp::start() {
 
     // Create handlers
     gnd_telem = std::make_unique<GroundTelemetry>(telemetry_state);
+    fc_telem = std::make_unique<FCTelemetry>(telemetry_state);
 
     printf("MavlinkTelemetry: Started\n");
 }
@@ -81,8 +82,15 @@ void Mavlinkudp::receive_loop() {
                             printf("Mavlink msg: ID=%d sysid=%d compid=%d len=%d\n",
                                     msg.msgid, msg.sysid, msg.compid, msg.len);
                         }
+                    } else if (msg.sysid == OHD_SYS_ID_BETAFLIGHT) {
+                        if(!fc_telem->handle_message(msg)) {
+                            printf("Mavlink msg: ID=%d sysid=%d compid=%d len=%d\n",
+                                    msg.msgid, msg.sysid, msg.compid, msg.len);
+                        }
+                    } else {
+                        printf("Mavlink msg: ID=%d sysid=%d compid=%d len=%d\n",
+                                    msg.msgid, msg.sysid, msg.compid, msg.len);
                     }
-
                     // tbd: actually handle stuff
                 }
             }

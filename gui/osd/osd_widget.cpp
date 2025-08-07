@@ -38,10 +38,34 @@ void OSDWidget::set_position(int norm_x, int norm_y) {
     lv_coord_t screen_w = lv_obj_get_width(parent);
     lv_coord_t screen_h = lv_obj_get_height(parent);
 
-    int abs_x = (norm_x * screen_w) / 1000;
-    int abs_y = (norm_y * screen_h) / 1000;
+    abs_x = (norm_x * screen_w) / 1000;
+    abs_y = (norm_y * screen_h) / 1000;
 
-    lv_obj_set_pos(container, abs_x, abs_y);
+    // Center alignment: subtract half of container size
+    lv_coord_t obj_w = lv_obj_get_width(container);
+    lv_coord_t obj_h = lv_obj_get_height(container);
+
+    lv_obj_set_pos(container,
+        abs_x - obj_w / 2,
+        abs_y - obj_h / 2);
+}
+
+void OSDWidget::update_position() {
+    if (!container) return;
+
+    lv_obj_t* parent = lv_obj_get_parent(container);
+    if (!parent) return;
+
+    lv_coord_t screen_w = lv_obj_get_width(parent);
+    lv_coord_t screen_h = lv_obj_get_height(parent);
+
+    // Center alignment: subtract half of container size
+    lv_coord_t obj_w = lv_obj_get_width(container);
+    lv_coord_t obj_h = lv_obj_get_height(container);
+
+    lv_obj_set_pos(container,
+        abs_x - obj_w / 2,
+        abs_y - obj_h / 2);
 }
 
 void OSDWidget::set_color(lv_color_t coloe) {

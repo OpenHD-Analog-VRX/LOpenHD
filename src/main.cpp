@@ -91,14 +91,6 @@ int main() {
 
     OSDManager osd_manager;
 
-  /*  auto air_temp = std::make_shared<SocTempWidget>(lv_scr_act(), true, telemetry_state.get());
-    air_temp->set_position(10, 10);
-    osd_manager.add_widget(air_temp);
-
-    auto ground_temp = std::make_shared<SocTempWidget>(lv_scr_act(), false, telemetry_state.get());
-    ground_temp->set_position(10, 30);
-    osd_manager.add_widget(ground_temp);*/
-
     OSDLoader loader(osd_manager, telemetry_state.get(), lv_scr_act());
     loader.load_from_file("/etc/lopenhd/osd_config.json");
 
